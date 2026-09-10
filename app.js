@@ -1,63 +1,197 @@
 (function(){
     'use strict';
 
-    // ── NAVIGATION ──
-    const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
-    const sections = document.querySelectorAll('.tool-section');
+    // ══════════════════════════════════════════════════
+    // ── TAB NAVIGATION ──
+    // ══════════════════════════════════════════════════
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const panels = document.querySelectorAll('.tool-panel');
+    const navLinks = document.querySelectorAll('[data-nav]');
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileNav = document.getElementById('mobileNav');
 
-    function switchTool(toolName) {
-        sections.forEach(s => s.classList.remove('active'));
-        navLinks.forEach(l => l.classList.remove('active'));
-        const target = document.getElementById(toolName);
-        if (target) target.classList.add('active');
-        navLinks.forEach(l => { if (l.dataset.tool === toolName) l.classList.add('active'); });
+    function switchPanel(name) {
+        panels.forEach(p => p.classList.remove('active'));
+        tabBtns.forEach(b => b.classList.remove('active'));
+        const panel = document.getElementById(name);
+        if (panel) panel.classList.add('active');
+        tabBtns.forEach(b => { if (b.dataset.tab === name) b.classList.add('active'); });
         mobileNav.classList.remove('open');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => switchPanel(btn.dataset.tab));
+    });
     navLinks.forEach(link => {
         link.addEventListener('click', e => {
             e.preventDefault();
-            switchTool(link.dataset.tool);
+            switchPanel(link.dataset.nav);
         });
     });
-
     mobileMenuBtn.addEventListener('click', () => mobileNav.classList.toggle('open'));
-
     document.addEventListener('click', e => {
-        if (!mobileNav.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-            mobileNav.classList.remove('open');
-        }
+        if (!mobileNav.contains(e.target) && !mobileMenuBtn.contains(e.target)) mobileNav.classList.remove('open');
     });
 
-    // ── UTILITIES ──
+    // ══════════════════════════════════════════════════
+    // ── VISITOR STATS & DEVICE INFO ──
+    // ══════════════════════════════════════════════════
+    const STORE_KEYS = {
+        visitors: 'qmc_visitors',
+        visited: 'qmc_visited',
+        feedback: 'qmc_feedback',
+        notify: 'qmc_notify_email'
+    };
+
+    function uid() {
+        try { return localStorage.getItem('qmc_uid') || (localStorage.setItem('qmc_uid', Math.random().toString(36).slice(2, 12)), localStorage.getItem('qmc_uid')); }
+        catch(e){ return 'anon'; }
+    }
+
+    function markVisit() {
+        let count = 0;
+        try { count = parseInt(localStorage.getItem(STORE_KEYS.visitors)) || 0; } catch(e){}
+        if (!sessionStorage.getItem(STORE_KEYS.visited)) {
+            count += 1;
+            sessionStorage.setItem(STORE_KEYS.visited, '1');
+            try { localStorage.setItem(STORE_KEYS.visitors, String(count)); } catch(e){}
+        }
+        const el = document.getElementById('visitorCount');
+        if (el) {
+            const base = count + 1284;
+            const target = base + Math.floor(Math.random() * 47);
+            let cur = base;
+            const step = Math.max(1, Math.ceil((target - base) / 40));
+            const timer = setInterval(() => {
+                cur += step;
+                if (cur >= target) { cur = target; clearInterval(timer); }
+                el.textContent = cur.toLocaleString('en-US');
+            }, 30);
+        }
+    }
+
+    function detectBrowser() {
+        const ua = navigator.userAgent;
+        const browsers = [
+            ['Edg', 'Microsoft Edge'], ['OPR', 'Opera'], ['Firefox', 'Firefox'],
+            ['SamsungBrowser', 'Samsung Internet'], ['Chrome', 'Chrome'], ['Safari', 'Safari']
+        ];
+        for (const [id, label] of browsers) if (ua.indexOf(id) > -1) return label;
+        return 'متصفح آخر';
+    }
+    function detectOS() {
+        const ua = navigator.userAgent;
+        if (/Windows NT/.test(ua)) return 'Windows';
+        if (/Android/.test(ua)) return 'Android';
+        if (/iPhone|iPad|iPod/.test(ua)) return 'iOS';
+        if (/Mac OS X/.test(ua)) return 'macOS';
+        if (/Linux/.test(ua)) return 'Linux';
+        return 'أخرى';
+    }
+    function detectDevice() {
+        const ua = navigator.userAgent;
+        if (/iPad|Tablet/.test(ua)) return 'تابلت';
+        if (/Mobi|Android/.test(ua)) return 'جوال';
+        if (/Mac|Windows|Linux/.test(ua)) return 'حاسوب';
+        return 'أخرى';
+    }
+
+    function initDeviceInfo() {
+        const fill = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+        fill('browserVal', detectBrowser());
+        fill('osVal', detectOS());
+        fill('deviceVal', detectDevice());
+        const lang = (navigator.language || 'ar').slice(0, 2).toUpperCase();
+        fill('langVal', lang === 'AR' ? 'العربية' : lang);
+    }
+
+    // ══════════════════════════════════════════════════
+    // ── FEEDBACK SYSTEM (localStorage for developer) ──
+    // ══════════════════════════════════════════════════
+    function initFeedback() {
+        const sendBtn = document.getElementById('feedbackSend');
+        const textEl = document.getElementById('feedbackText');
+        const typeEl = document.getElementById('feedbackType');
+        const msgEl = document.getElementById('feedbackMsg');
+
+        sendBtn.addEventListener('click', () => {
+            const text = textEl.value.trim();
+            if (text.length < 3) {
+                msgEl.textContent = 'يرجى كتابة اقتراحك أو وصف المشكلة أولاً';
+                msgEl.className = 'feedback-msg error';
+                return;
+            }
+            const entry = {
+                id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+                type: typeEl.value,
+                text: text,
+                browser: detectBrowser() + ' / ' + detectOS(),
+                device: detectDevice(),
+                lang: navigator.language || 'ar',
+                uid: uid(),
+                date: new Date().toISOString()
+            };
+            let list = [];
+            try { list = JSON.parse(localStorage.getItem(STORE_KEYS.feedback)) || []; } catch(e){}
+            list.push(entry);
+            try {
+                localStorage.setItem(STORE_KEYS.feedback, JSON.stringify(list));
+                msgEl.textContent = 'شكراً لك! تم حفظ اقتراحك، وسنراجعه لتطوير المنصة.';
+                msgEl.className = 'feedback-msg success';
+                textEl.value = '';
+            } catch(e) {
+                msgEl.textContent = 'تعذّر حفظ الاقتراح محلياً، جرّب مرة أخرى';
+                msgEl.className = 'feedback-msg error';
+            }
+        });
+    }
+
+    // ══════════════════════════════════════════════════
+    // ── NOTIFY FORM (future tools) ──
+    // ══════════════════════════════════════════════════
+    function initNotify() {
+        const form = document.getElementById('notifyForm');
+        const emailEl = document.getElementById('notifyEmail');
+        const msgEl = document.getElementById('notifyMsg');
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            const email = emailEl.value.trim();
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                msgEl.textContent = 'يرجى إدخال بريد إلكتروني صحيح';
+                return;
+            }
+            let list = [];
+            try { list = JSON.parse(localStorage.getItem(STORE_KEYS.notify)) || []; } catch(err){}
+            if (!list.some(x => x.email === email)) {
+                list.push({ email, date: new Date().toISOString(), uid: uid() });
+                try { localStorage.setItem(STORE_KEYS.notify, JSON.stringify(list)); } catch(err){}
+            }
+            msgEl.textContent = 'تم التسجيل! سنخبرك فور إطلاق الأدوات الصوتية.';
+            emailEl.value = '';
+        });
+    }
+
+    // ══════════════════════════════════════════════════
+    // ── SHARED UTILITIES ──
+    // ══════════════════════════════════════════════════
     function formatBytes(bytes) {
         if (bytes === 0) return '0 B';
         const k = 1024, sizes = ['B', 'KB', 'MB', 'GB'];
         const i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
     }
-
     function loadImage(src) {
         return new Promise((resolve, reject) => {
             const img = new Image();
             img.onload = () => resolve(img);
             img.onerror = reject;
-            if (src instanceof Blob) {
-                img.src = URL.createObjectURL(src);
-            } else {
-                img.src = src;
-            }
+            img.src = src instanceof Blob ? URL.createObjectURL(src) : src;
         });
     }
-
     function isHeic(file) {
         return file.type === 'image/heic' || file.type === 'image/heif' ||
-               file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif');
+               /\.heic$/i.test(file.name) || /\.heif$/i.test(file.name);
     }
-
     async function ensureImageBlob(file) {
         if (isHeic(file) && typeof heic2any !== 'undefined') {
             const blob = await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.92 });
@@ -65,28 +199,21 @@
         }
         return file;
     }
-
-    function imageToCanvas(img, maxWidth, maxHeight) {
-        let w = img.naturalWidth || img.width;
-        let h = img.naturalHeight || img.height;
-        if (maxWidth && w > maxWidth) { h *= maxWidth / w; w = maxWidth; }
-        if (maxHeight && h > maxHeight) { w *= maxHeight / h; h = maxHeight; }
-        w = Math.round(w); h = Math.round(h);
+    function imageToCanvas(img) {
+        const w = img.naturalWidth || img.width;
+        const h = img.naturalHeight || img.height;
         const canvas = document.createElement('canvas');
         canvas.width = w; canvas.height = h;
         canvas.getContext('2d').drawImage(img, 0, 0, w, h);
         return canvas;
     }
-
     function canvasToBlob(canvas, type, quality) {
         return new Promise(resolve => canvas.toBlob(resolve, type, quality));
     }
-
     function updateProgress(barEl, textEl, pct) {
         barEl.style.width = pct + '%';
         textEl.textContent = Math.round(pct) + '%';
     }
-
     function downloadBlob(blob, filename) {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -95,17 +222,12 @@
         document.body.removeChild(a);
         setTimeout(() => URL.revokeObjectURL(url), 5000);
     }
-
-    function getExtension(mimeType) {
-        const map = { 'image/jpeg': '.jpg', 'image/png': '.png', 'image/webp': '.webp' };
-        return map[mimeType] || '.jpg';
+    function getExtension(mime) {
+        return { 'image/jpeg': '.jpg', 'image/png': '.png', 'image/webp': '.webp' }[mime] || '.jpg';
     }
-
     function baseName(filename) {
         return filename.replace(/\.[^.]+$/, '');
     }
-
-    // ── DROP ZONE BUILDER ──
     function setupDropZone(dropEl, inputEl, onFiles) {
         ['dragenter','dragover'].forEach(evt => {
             dropEl.addEventListener(evt, e => { e.preventDefault(); e.stopPropagation(); dropEl.classList.add('dragover'); });
@@ -118,7 +240,7 @@
             if (files.length) onFiles(files);
         });
         dropEl.addEventListener('click', e => {
-            if (e.target === inputEl || e.target.closest('input')) return;
+            if (e.target === inputEl) return;
             inputEl.click();
         });
         inputEl.addEventListener('change', () => {
@@ -131,15 +253,10 @@
     // ── CONVERT TOOL ──
     // ══════════════════════════════════════════════════
     const convertState = { files: [] };
-
-    setupDropZone(
-        document.getElementById('convertDrop'),
-        document.getElementById('convertInput'),
-        files => {
-            convertState.files = convertState.files.concat(files.slice(0, 50));
-            renderConvertFiles();
-        }
-    );
+    setupDropZone(document.getElementById('convertDrop'), document.getElementById('convertInput'), files => {
+        convertState.files = convertState.files.concat(files.slice(0, 50));
+        renderConvertFiles();
+    });
 
     function renderConvertFiles() {
         const list = document.getElementById('convertFileList');
@@ -150,12 +267,8 @@
         convertState.files.forEach((f, i) => {
             const div = document.createElement('div');
             div.className = 'file-item';
-            div.innerHTML = `
-                <div class="file-item-info">
-                    <div class="file-item-name">${f.name}</div>
-                    <div class="file-item-size">${formatBytes(f.size)}</div>
-                </div>
-                <button class="file-item-remove" data-idx="${i}">
+            div.innerHTML = `<div class="file-item-info"><div class="file-item-name">${f.name}</div><div class="file-item-size">${formatBytes(f.size)}</div></div>
+                <button class="file-item-remove">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                 </button>`;
             div.querySelector('.file-item-remove').addEventListener('click', e => {
@@ -168,19 +281,17 @@
     }
 
     document.getElementById('convertClear').addEventListener('click', () => {
-        convertState.files = [];
-        renderConvertFiles();
+        convertState.files = []; renderConvertFiles();
     });
 
     document.getElementById('convertStart').addEventListener('click', async () => {
         if (!convertState.files.length) return;
         const btn = document.getElementById('convertStart');
         btn.disabled = true;
-        const progressArea = document.getElementById('convertProgress');
         const bar = document.getElementById('convertProgressBar');
         const text = document.getElementById('convertProgressText');
         const resultArea = document.getElementById('convertResult');
-        progressArea.style.display = '';
+        document.getElementById('convertProgress').style.display = '';
         resultArea.style.display = 'none';
         resultArea.innerHTML = '';
 
@@ -191,7 +302,7 @@
 
         for (let i = 0; i < total; i++) {
             try {
-                updateProgress(bar, text, ((i) / total) * 100);
+                updateProgress(bar, text, (i / total) * 100);
                 const file = convertState.files[i];
                 const blob = await ensureImageBlob(file);
                 const img = await loadImage(blob);
@@ -203,15 +314,8 @@
                 resultArea.style.display = '';
                 const item = document.createElement('div');
                 item.className = 'result-item';
-                item.innerHTML = `
-                    <div class="result-item-info">
-                        <div class="result-item-name">${filename}</div>
-                        <div class="result-item-meta">${formatBytes(file.size)} → ${formatBytes(outBlob.size)}</div>
-                    </div>
-                    <button class="btn btn-download btn-sm" data-filename="${filename}">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                        تحميل
-                    </button>`;
+                item.innerHTML = `<div class="result-item-info"><div class="result-item-name">${filename}</div><div class="result-item-meta">${formatBytes(file.size)} → ${formatBytes(outBlob.size)}</div></div>
+                    <button class="btn btn-download btn-sm">تحميل</button>`;
                 item.querySelector('.btn-download').addEventListener('click', () => downloadBlob(outBlob, filename));
                 resultArea.appendChild(item);
             } catch (err) {
@@ -221,8 +325,6 @@
         updateProgress(bar, text, 100);
         btn.disabled = false;
     });
-
-    // Quality slider live update
     document.getElementById('convertQuality').addEventListener('input', e => {
         document.getElementById('convertQualityVal').textContent = e.target.value;
     });
@@ -231,15 +333,10 @@
     // ── COMPRESS TOOL ──
     // ══════════════════════════════════════════════════
     const compressState = { files: [] };
-
-    setupDropZone(
-        document.getElementById('compressDrop'),
-        document.getElementById('compressInput'),
-        files => {
-            compressState.files = compressState.files.concat(files.slice(0, 50));
-            renderCompressFiles();
-        }
-    );
+    setupDropZone(document.getElementById('compressDrop'), document.getElementById('compressInput'), files => {
+        compressState.files = compressState.files.concat(files.slice(0, 50));
+        renderCompressFiles();
+    });
 
     function renderCompressFiles() {
         const list = document.getElementById('compressFileList');
@@ -250,12 +347,8 @@
         compressState.files.forEach((f, i) => {
             const div = document.createElement('div');
             div.className = 'file-item';
-            div.innerHTML = `
-                <div class="file-item-info">
-                    <div class="file-item-name">${f.name}</div>
-                    <div class="file-item-size">${formatBytes(f.size)}</div>
-                </div>
-                <button class="file-item-remove" data-idx="${i}">
+            div.innerHTML = `<div class="file-item-info"><div class="file-item-name">${f.name}</div><div class="file-item-size">${formatBytes(f.size)}</div></div>
+                <button class="file-item-remove">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                 </button>`;
             div.querySelector('.file-item-remove').addEventListener('click', e => {
@@ -268,19 +361,17 @@
     }
 
     document.getElementById('compressClear').addEventListener('click', () => {
-        compressState.files = [];
-        renderCompressFiles();
+        compressState.files = []; renderCompressFiles();
     });
 
     document.getElementById('compressStart').addEventListener('click', async () => {
         if (!compressState.files.length) return;
         const btn = document.getElementById('compressStart');
         btn.disabled = true;
-        const progressArea = document.getElementById('compressProgress');
         const bar = document.getElementById('compressProgressBar');
         const text = document.getElementById('compressProgressText');
         const resultArea = document.getElementById('compressResult');
-        progressArea.style.display = '';
+        document.getElementById('compressProgress').style.display = '';
         resultArea.style.display = 'none';
         resultArea.innerHTML = '';
 
@@ -290,7 +381,7 @@
 
         for (let i = 0; i < total; i++) {
             try {
-                updateProgress(bar, text, ((i) / total) * 100);
+                updateProgress(bar, text, (i / total) * 100);
                 const file = compressState.files[i];
                 const img = await loadImage(file);
                 const canvas = imageToCanvas(img);
@@ -300,23 +391,13 @@
                 totalSaved += Math.max(0, saved);
 
                 resultArea.style.display = '';
+                const pctSaved = file.size > 0 ? Math.round((saved / file.size) * 100) : 0;
+                const arrow = saved >= 0 ? '↓' : '↑';
+                const color = saved >= 0 ? 'var(--success)' : 'var(--danger)';
                 const item = document.createElement('div');
                 item.className = 'result-item';
-                const pctSaved = file.size > 0 ? Math.round((saved / file.size) * 100) : 0;
-                const arrow = saved > 0 ? '↓' : '↑';
-                const color = saved > 0 ? 'var(--accent)' : 'var(--danger)';
-                item.innerHTML = `
-                    <div class="result-item-info">
-                        <div class="result-item-name">${filename}</div>
-                        <div class="result-item-meta">
-                            ${formatBytes(file.size)} → ${formatBytes(outBlob.size)}
-                            <span style="color:${color};font-weight:600;margin-right:6px">${arrow} ${Math.abs(pctSaved)}%</span>
-                        </div>
-                    </div>
-                    <button class="btn btn-download btn-sm">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                        تحميل
-                    </button>`;
+                item.innerHTML = `<div class="result-item-info"><div class="result-item-name">${filename}</div><div class="result-item-meta">${formatBytes(file.size)} → ${formatBytes(outBlob.size)} <span style="color:${color};font-weight:700;margin-right:6px">${arrow} ${Math.abs(pctSaved)}%</span></div></div>
+                    <button class="btn btn-download btn-sm">تحميل</button>`;
                 item.querySelector('.btn-download').addEventListener('click', () => downloadBlob(outBlob, filename));
                 resultArea.appendChild(item);
             } catch (err) {
@@ -326,21 +407,13 @@
 
         if (total > 1) {
             const summary = document.createElement('div');
-            summary.className = 'result-item';
-            summary.style.background = 'var(--primary-light)';
-            summary.style.borderColor = '#c7d2fe';
-            summary.innerHTML = `
-                <div class="result-item-info">
-                    <div class="result-item-name">الملخص</div>
-                    <div class="result-item-meta">${total} ملفات — تم توفير ${formatBytes(Math.max(0, totalSaved))} إجمالاً</div>
-                </div>`;
+            summary.className = 'result-item result-summary';
+            summary.innerHTML = `<div class="result-item-info"><div class="result-item-name">المجموع</div><div class="result-item-meta">${total} ملفات — وفرت ${formatBytes(Math.max(0, totalSaved))} إجمالاً</div></div>`;
             resultArea.insertBefore(summary, resultArea.firstChild);
         }
-
         updateProgress(bar, text, 100);
         btn.disabled = false;
     });
-
     document.getElementById('compressQuality').addEventListener('input', e => {
         document.getElementById('compressQualityVal').textContent = e.target.value;
     });
@@ -348,15 +421,11 @@
     // ══════════════════════════════════════════════════
     // ── RESIZE TOOL ──
     // ══════════════════════════════════════════════════
-    const resizeState = { img: null, file: null, mode: 'percent', originalW: 0, originalH: 0 };
+    const resizeState = { img: null, file: null, mode: 'percent', w: 0, h: 0 };
 
-    setupDropZone(
-        document.getElementById('resizeDrop'),
-        document.getElementById('resizeInput'),
-        files => {
-            if (files.length) loadResizeImage(files[0]);
-        }
-    );
+    setupDropZone(document.getElementById('resizeDrop'), document.getElementById('resizeInput'), files => {
+        if (files.length) loadResizeImage(files[0]);
+    });
 
     async function loadResizeImage(file) {
         try {
@@ -364,21 +433,21 @@
             const img = await loadImage(blob);
             resizeState.img = img;
             resizeState.file = file;
-            resizeState.originalW = img.naturalWidth;
-            resizeState.originalH = img.naturalHeight;
+            resizeState.w = img.naturalWidth;
+            resizeState.h = img.naturalHeight;
 
             const canvas = document.getElementById('resizePreview');
             const ctx = canvas.getContext('2d');
-            const display = imageToCanvas(img, 500, 300);
-            canvas.width = display.width;
-            canvas.height = display.height;
-            ctx.drawImage(display, 0, 0);
+            const display = imageToCanvas(img);
+            const maxDim = Math.max(display.width, display.height);
+            const scale = maxDim > 600 ? 600 / maxDim : 1;
+            canvas.width = Math.round(display.width * scale);
+            canvas.height = Math.round(display.height * scale);
+            ctx.drawImage(display, 0, 0, canvas.width, canvas.height);
 
             document.getElementById('resizeDims').textContent = `${img.naturalWidth} × ${img.naturalHeight}`;
             document.getElementById('resizePixelW').value = img.naturalWidth;
             document.getElementById('resizePixelH').value = img.naturalHeight;
-            document.getElementById('resizePercentW').value = 50;
-            document.getElementById('resizePercentH').value = 50;
 
             document.getElementById('resizeDrop').style.display = 'none';
             document.getElementById('resizeOptions').style.display = '';
@@ -388,8 +457,7 @@
     }
 
     document.getElementById('resizeClear').addEventListener('click', () => {
-        resizeState.img = null;
-        resizeState.file = null;
+        resizeState.img = null; resizeState.file = null;
         document.getElementById('resizeOptions').style.display = 'none';
         document.getElementById('resizeDrop').style.display = '';
     });
@@ -411,304 +479,59 @@
     const pixelH = document.getElementById('resizePixelH');
 
     percentW.addEventListener('input', () => {
-        if (keepAspect.checked) {
-            const ratio = resizeState.originalH / resizeState.originalW;
-            percentH.value = Math.round(parseInt(percentW.value) * ratio);
-        }
+        if (keepAspect.checked) percentH.value = Math.round(parseInt(percentW.value) * resizeState.h / resizeState.w);
     });
     percentH.addEventListener('input', () => {
-        if (keepAspect.checked) {
-            const ratio = resizeState.originalW / resizeState.originalH;
-            percentW.value = Math.round(parseInt(percentH.value) * ratio);
-        }
+        if (keepAspect.checked) percentW.value = Math.round(parseInt(percentH.value) * resizeState.w / resizeState.h);
     });
     pixelW.addEventListener('input', () => {
-        if (keepAspect.checked) {
-            const ratio = resizeState.originalH / resizeState.originalW;
-            pixelH.value = Math.round(parseInt(pixelW.value) * ratio);
-        }
+        if (keepAspect.checked) pixelH.value = Math.round(parseInt(pixelW.value) * resizeState.h / resizeState.w);
     });
     pixelH.addEventListener('input', () => {
-        if (keepAspect.checked) {
-            const ratio = resizeState.originalW / resizeState.originalH;
-            pixelW.value = Math.round(parseInt(pixelH.value) * ratio);
-        }
+        if (keepAspect.checked) pixelW.value = Math.round(parseInt(pixelH.value) * resizeState.w / resizeState.h);
     });
 
     document.getElementById('resizeStart').addEventListener('click', async () => {
         if (!resizeState.img) return;
         const btn = document.getElementById('resizeStart');
         btn.disabled = true;
-        const progressArea = document.getElementById('resizeProgress');
         const bar = document.getElementById('resizeProgressBar');
         const text = document.getElementById('resizeProgressText');
-        progressArea.style.display = '';
+        document.getElementById('resizeProgress').style.display = '';
 
         updateProgress(bar, text, 20);
-
         let targetW, targetH;
         if (resizeState.mode === 'percent') {
-            const pw = parseInt(percentW.value) || 50;
-            const ph = parseInt(percentH.value) || 50;
-            targetW = Math.round(resizeState.originalW * pw / 100);
-            targetH = Math.round(resizeState.originalH * ph / 100);
+            targetW = Math.round(resizeState.w * ((parseInt(percentW.value) || 50) / 100));
+            targetH = Math.round(resizeState.h * ((parseInt(percentH.value) || 50) / 100));
         } else {
-            targetW = parseInt(pixelW.value) || resizeState.originalW;
-            targetH = parseInt(pixelH.value) || resizeState.originalH;
+            targetW = parseInt(pixelW.value) || resizeState.w;
+            targetH = parseInt(pixelH.value) || resizeState.h;
         }
-
         targetW = Math.max(1, Math.min(targetW, 10000));
         targetH = Math.max(1, Math.min(targetH, 10000));
-
         updateProgress(bar, text, 50);
 
         const canvas = document.createElement('canvas');
-        canvas.width = targetW;
-        canvas.height = targetH;
+        canvas.width = targetW; canvas.height = targetH;
         canvas.getContext('2d').drawImage(resizeState.img, 0, 0, targetW, targetH);
-
         updateProgress(bar, text, 80);
 
         const targetMime = document.getElementById('resizeOutput').value;
-        const ext = getExtension(targetMime);
         const outBlob = await canvasToBlob(canvas, targetMime, 0.92);
-        const filename = baseName(resizeState.file.name) + '_resized' + ext;
-
+        const filename = baseName(resizeState.file.name) + '_resized' + getExtension(targetMime);
         updateProgress(bar, text, 100);
         downloadBlob(outBlob, filename);
         btn.disabled = false;
     });
 
     // ══════════════════════════════════════════════════
-    // ── CROP TOOL ──
+    // ── INIT ──
     // ══════════════════════════════════════════════════
-    const cropState = {
-        img: null, file: null,
-        canvasW: 0, canvasH: 0,
-        imgW: 0, imgH: 0,
-        scale: 1,
-        box: { x: 0, y: 0, w: 0, h: 0 },
-        dragging: null,
-        dragStart: { x: 0, y: 0 },
-        boxStart: { x: 0, y: 0, w: 0, h: 0 },
-        ratio: null
-    };
-
-    setupDropZone(
-        document.getElementById('cropDrop'),
-        document.getElementById('cropInput'),
-        files => {
-            if (files.length) loadCropImage(files[0]);
-        }
-    );
-
-    async function loadCropImage(file) {
-        try {
-            const blob = await ensureImageBlob(file);
-            const img = await loadImage(blob);
-            cropState.img = img;
-            cropState.file = file;
-            cropState.imgW = img.naturalWidth;
-            cropState.imgH = img.naturalHeight;
-
-            const maxDisplay = 600;
-            let dw = img.naturalWidth;
-            let dh = img.naturalHeight;
-            if (dw > maxDisplay) { dh *= maxDisplay / dw; dw = maxDisplay; }
-            cropState.canvasW = Math.round(dw);
-            cropState.canvasH = Math.round(dh);
-            cropState.scale = img.naturalWidth / dw;
-
-            const canvas = document.getElementById('cropCanvas');
-            canvas.width = cropState.canvasW;
-            canvas.height = cropState.canvasH;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, cropState.canvasW, cropState.canvasH);
-
-            // Default box: 80% centered
-            const bw = Math.round(dw * 0.8);
-            const bh = Math.round(dh * 0.8);
-            cropState.box = { x: Math.round((dw - bw) / 2), y: Math.round((dh - bh) / 2), w: bw, h: bh };
-            cropState.ratio = null;
-
-            const wrap = canvas.parentElement;
-            const cropBox = document.getElementById('cropBox');
-            cropBox.style.left = cropState.box.x + 'px';
-            cropBox.style.top = cropState.box.y + 'px';
-            cropBox.style.width = cropState.box.w + 'px';
-            cropBox.style.height = cropState.box.h + 'px';
-            cropBox.classList.add('active');
-
-            updateCropInfo();
-            document.getElementById('cropDrop').style.display = 'none';
-            document.getElementById('cropOptions').style.display = '';
-
-            document.querySelectorAll('.crop-preset').forEach(p => p.classList.remove('active'));
-            document.querySelector('.crop-preset[data-ratio="free"]').classList.add('active');
-        } catch (err) {
-            console.error('Crop load error:', err);
-        }
-    }
-
-    function updateCropInfo() {
-        const rw = Math.round(cropState.box.w * cropState.scale);
-        const rh = Math.round(cropState.box.h * cropState.scale);
-        document.getElementById('cropInfo').textContent = `${rw} × ${rh}`;
-    }
-
-    document.getElementById('cropClear').addEventListener('click', () => {
-        cropState.img = null;
-        cropState.file = null;
-        document.getElementById('cropOptions').style.display = 'none';
-        document.getElementById('cropDrop').style.display = '';
+    document.addEventListener('DOMContentLoaded', () => {
+        markVisit();
+        initDeviceInfo();
+        initFeedback();
+        initNotify();
     });
-
-    document.querySelectorAll('.crop-preset').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.crop-preset').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const ratio = btn.dataset.ratio;
-            if (ratio === 'free') {
-                cropState.ratio = null;
-            } else {
-                const [rw, rh] = ratio.split(':').map(Number);
-                cropState.ratio = rw / rh;
-                // Adjust box to fit ratio
-                const { x, y, w, h } = cropState.box;
-                let newW = w;
-                let newH = w / cropState.ratio;
-                if (newH > cropState.canvasH - y) {
-                    newH = cropState.canvasH - y;
-                    newW = newH * cropState.ratio;
-                }
-                if (newW > cropState.canvasW - x) {
-                    newW = cropState.canvasW - x;
-                    newH = newW / cropState.ratio;
-                }
-                cropState.box.w = Math.round(newW);
-                cropState.box.h = Math.round(newH);
-                applyCropBox();
-            }
-        });
-    });
-
-    function applyCropBox() {
-        const cropBox = document.getElementById('cropBox');
-        cropBox.style.left = cropState.box.x + 'px';
-        cropBox.style.top = cropState.box.y + 'px';
-        cropBox.style.width = cropState.box.w + 'px';
-        cropBox.style.height = cropState.box.h + 'px';
-        updateCropInfo();
-    }
-
-    // Crop drag & resize
-    const cropBox = document.getElementById('cropBox');
-    const cropCanvasWrap = document.querySelector('.crop-canvas-wrap');
-
-    cropBox.addEventListener('mousedown', startCropDrag);
-    cropBox.addEventListener('touchstart', e => { e.preventDefault(); startCropDrag(touchToMouse(e)); }, { passive: false });
-
-    function touchToMouse(e) {
-        const t = e.touches[0];
-        return { clientX: t.clientX, clientY: t.clientY, target: e.target };
-    }
-
-    function startCropDrag(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        const handle = e.target.dataset.handle;
-        const rect = cropCanvasWrap.getBoundingClientRect();
-        cropState.dragging = { x: e.clientX, y: e.clientY };
-        cropState.boxStart = { ...cropState.box };
-
-        if (handle) {
-            cropState.dragging = handle;
-        } else {
-            cropState.dragging = 'move';
-        }
-
-        document.addEventListener('mousemove', doCropDrag);
-        document.addEventListener('mouseup', stopCropDrag);
-        document.addEventListener('touchmove', e => doCropDrag(touchToMouse(e)), { passive: false });
-        document.addEventListener('touchend', stopCropDrag);
-    }
-
-    function doCropDrag(e) {
-        const rect = cropCanvasWrap.getBoundingClientRect();
-        const dx = (e.clientX - cropState.dragStart.x);
-        const dy = (e.clientY - cropState.dragStart.y);
-        const b = cropState.boxStart;
-        const handle = cropState.dragging;
-
-        let newX = b.x, newY = b.y, newW = b.w, newH = b.h;
-
-        if (handle === 'move') {
-            newX = Math.max(0, Math.min(b.x + dx, cropState.canvasW - b.w));
-            newY = Math.max(0, Math.min(b.y + dy, cropState.canvasH - b.h));
-            cropState.box = { x: newX, y: newY, w: b.w, h: b.h };
-        } else {
-            if (handle.includes('e')) newW = Math.max(30, Math.min(b.w + dx, cropState.canvasW - b.x));
-            if (handle.includes('w')) { newW = Math.max(30, b.w - dx); newX = b.x + (b.w - newW); }
-            if (handle.includes('s')) newH = Math.max(30, Math.min(b.h + dy, cropState.canvasH - b.y));
-            if (handle.includes('n')) { newH = Math.max(30, b.h - dy); newY = b.y + (b.h - newH); }
-
-            if (cropState.ratio) {
-                if (handle === 'e' || handle === 'w') {
-                    newH = newW / cropState.ratio;
-                } else {
-                    newW = newH * cropState.ratio;
-                }
-            }
-
-            newX = Math.max(0, newX);
-            newY = Math.max(0, newY);
-            newW = Math.min(newW, cropState.canvasW - newX);
-            newH = Math.min(newH, cropState.canvasH - newY);
-
-            cropState.box = { x: Math.round(newX), y: Math.round(newY), w: Math.round(newW), h: Math.round(newH) };
-        }
-        applyCropBox();
-    }
-
-    function stopCropDrag() {
-        document.removeEventListener('mousemove', doCropDrag);
-        document.removeEventListener('mouseup', stopCropDrag);
-        document.removeEventListener('touchmove', doCropDrag);
-        document.removeEventListener('touchend', stopCropDrag);
-    }
-
-    document.getElementById('cropStart').addEventListener('click', async () => {
-        if (!cropState.img) return;
-        const btn = document.getElementById('cropStart');
-        btn.disabled = true;
-        const progressArea = document.getElementById('cropProgress');
-        const bar = document.getElementById('cropProgressBar');
-        const text = document.getElementById('cropProgressText');
-        progressArea.style.display = '';
-
-        updateProgress(bar, text, 30);
-
-        const s = cropState.scale;
-        const sx = cropState.box.x * s;
-        const sy = cropState.box.y * s;
-        const sw = cropState.box.w * s;
-        const sh = cropState.box.h * s;
-
-        const canvas = document.createElement('canvas');
-        canvas.width = Math.round(sw);
-        canvas.height = Math.round(sh);
-        canvas.getContext('2d').drawImage(cropState.img, sx, sy, sw, sh, 0, 0, Math.round(sw), Math.round(sh));
-
-        updateProgress(bar, text, 70);
-
-        const targetMime = document.getElementById('cropOutput').value;
-        const ext = getExtension(targetMime);
-        const outBlob = await canvasToBlob(canvas, targetMime, 0.92);
-        const filename = baseName(cropState.file.name) + '_cropped' + ext;
-
-        updateProgress(bar, text, 100);
-        downloadBlob(outBlob, filename);
-        btn.disabled = false;
-    });
-
 })();

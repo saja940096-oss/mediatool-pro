@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MediaTool Pro - تحويل وضغط وتعديل الصور أونلاين مجاناً</title>
-    <meta name="description" content="أداة مجانية لتحويل صيغ الصور HEIC إلى JPG/PNG، ضغط الصور، تعديل الأبعاد وقصها مباشرة من المتصفح. بدون رفع ملفاتك للسيرفر.">
-    <meta name="keywords" content="تحويل صور, HEIC إلى JPG, ضغط صور, resize صور, قص صور, media converter, image compressor, صور أونلاين">
+    <title>Quick Media Converters - تحويل وضغط وتعديل الصور أونلاين مجاناً</title>
+    <meta name="description" content="منصة مجانية لتحويل صيغ الصور HEIC إلى JPG/PNG، ضغط وتصغير الصور، تغيير أبعادها بدقة — كل شيء يعمل داخل متصفحك بدون رفع ملفاتك لأي سيرفر.">
+    <meta name="keywords" content="تحويل صور, HEIC إلى JPG, ضغط صور, تصغير حجم الصور, تغيير أبعاد الصور, resize صورة, media converter, image compressor, موقع تحويل الصور">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="MediaTool Pro - أدوات تحويل ومعالجة الصور المجانية">
-    <meta property="og:description" content="حوّل وضغط وعدّل صورك مباشرة من المتصفح بدون رفع أي ملفات. سريع وآمن ومجاناً.">
+    <meta property="og:title" content="Quick Media Converters - أدوات تحويل الصور المجانية">
+    <meta property="og:description" content="حوّل، اضغط، وعدّل أبعاد صورك مباشرة من المتصفح. سريع، آمن، ومجاني — بدون رفع ملفاتك.">
     <meta property="og:type" content="website">
-    <link rel="canonical" href="">
+    <meta property="og:locale" content="ar_AR">
+    <link rel="canonical" href="https://saja940096-oss.github.io/mediatool-pro/">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -19,33 +20,36 @@
     {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "MediaTool Pro",
-        "url": "",
-        "description": "أداة مجانية لتحويل وضغط وتعديل الصور مباشرة من المتصفح",
+        "name": "Quick Media Converters",
+        "url": "https://saja940096-oss.github.io/mediatool-pro/",
+        "description": "أدوات مجانية لتحويل وضغط وتعديل أبعاد الصور بالكامل داخل المتصفح",
         "applicationCategory": "MultimediaApplication",
         "operatingSystem": "All",
+        "inLanguage": "ar",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
     }
     </script>
 </head>
 <body>
+
+    <!-- HEADER -->
     <header class="header">
         <div class="container header-inner">
             <a href="#" class="logo">
                 <span class="logo-icon">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="3" y="3" width="18" height="18" rx="2"/>
                         <circle cx="8.5" cy="8.5" r="1.5"/>
                         <path d="m21 15-5-5L5 21"/>
                     </svg>
                 </span>
-                <span class="logo-text">MediaTool<span class="logo-accent">Pro</span></span>
+                <span class="logo-text">Quick<span class="logo-accent">Convert</span><span class="logo-badge">Pro</span></span>
             </a>
             <nav class="nav">
-                <a href="#convert" class="nav-link active" data-tool="convert">تحويل</a>
-                <a href="#compress" class="nav-link" data-tool="compress">ضغط</a>
-                <a href="#resize" class="nav-link" data-tool="resize">تغيير الحجم</a>
-                <a href="#crop" class="nav-link" data-tool="crop">قص</a>
+                <a href="#convert" class="nav-link" data-nav="convert">تحويل</a>
+                <a href="#compress" class="nav-link" data-nav="compress">ضغط</a>
+                <a href="#resize" class="nav-link" data-nav="resize">تعديل الأبعاد</a>
+                <a href="#future" class="nav-link" data-nav="future">الأدوات القادمة</a>
             </nav>
             <button class="mobile-menu-btn" aria-label="القائمة" id="mobileMenuBtn">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -56,445 +60,414 @@
             </button>
         </div>
         <div class="mobile-nav" id="mobileNav">
-            <a href="#convert" class="mobile-nav-link active" data-tool="convert">تحويل</a>
-            <a href="#compress" class="mobile-nav-link" data-tool="compress">ضغط</a>
-            <a href="#resize" class="mobile-nav-link" data-tool="resize">تغيير الحجم</a>
-            <a href="#crop" class="mobile-nav-link" data-tool="crop">قص</a>
+            <a href="#convert" class="mobile-nav-link" data-nav="convert">تحويل</a>
+            <a href="#compress" class="mobile-nav-link" data-nav="compress">ضغط</a>
+            <a href="#resize" class="mobile-nav-link" data-nav="resize">تعديل الأبعاد</a>
+            <a href="#future" class="mobile-nav-link" data-nav="future">الأدوات القادمة</a>
         </div>
     </header>
 
-    <main class="main">
-        <section class="hero">
-            <div class="container">
-                <h1 class="hero-title">أدوات تحويل ومعالجة الصور <span class="hero-highlight">بقوة المتصفح</span></h1>
-                <p class="hero-subtitle">حوّل، اضغط، عدّل وقص صورك مباشرة من متصفحك — بدون رفع ملفاتك لأي سيرفر. سريع وآمن ومجاناً 100%.</p>
-            </div>
-        </section>
-
-        <!-- Ad Banner Top -->
-        <div class="ad-slot ad-top" id="ad-top">
-            <div class="ad-placeholder">
-                <span>مساحة إعلانية</span>
-                <small>728 × 90</small>
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="hero-title">أدوات تحويل ومعالجة الصور <span class="hero-highlight">بقوة متصفحك</span></h1>
+            <p class="hero-subtitle">حوّل، اضغط، وعدّل أبعاد صورك بثوانٍ — كل المعالجة تتم داخل متصفحك مباشرة، دون رفع ملفاتك لأي سيرفر. سريع، آمن، ومجاني بالكامل.</p>
+            <div class="hero-trust">
+                <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> معالجة محلية آمنة</span>
+                <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> بدون رفع ملفات</span>
+                <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> مجاني 100%</span>
             </div>
         </div>
+    </section>
 
-        <div class="container tools-wrapper">
-            <!-- CONVERT TOOL -->
-            <section class="tool-section active" id="convert">
-                <div class="tool-card">
-                    <div class="tool-header">
-                        <div class="tool-icon convert-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="17 1 21 5 17 9"/>
-                                <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
-                                <polyline points="7 23 3 19 7 15"/>
-                                <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <h2 class="tool-title">تحويل صيغ الصور</h2>
-                            <p class="tool-desc">حوّل صورك من HEIC, WEBP, BMP, TIFF إلى JPG أو PNG</p>
-                        </div>
-                    </div>
+    <!-- Ad Banner Top -->
+    <section class="ad-slot">
+        <div class="ad-placeholder">
+            <span>مساحة إعلانية</span>
+            <small>728 × 90</small>
+        </div>
+    </section>
 
-                    <div class="drop-zone" id="convertDrop" data-tool="convert">
-                        <div class="drop-zone-content">
+    <div class="container">
+        <!-- TOOL TABS -->
+        <div class="tabs" id="tabs">
+            <button class="tab-btn active" data-tab="convert">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+                تحويل الصور
+            </button>
+            <button class="tab-btn" data-tab="compress">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+                ضغط الصور
+            </button>
+            <button class="tab-btn" data-tab="resize">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+                تعديل الأبعاد
+            </button>
+            <button class="tab-btn" data-tab="future">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+                صوتيات وفيديوهات <span class="tab-badge">قريباً</span>
+            </button>
+        </div>
+
+        <div class="workspace">
+            <main>
+                <!-- ── CONVERT PANEL ── -->
+                <section class="tool-panel active" id="convert">
+                    <div class="tool-card">
+                        <div class="tool-header">
+                            <div class="tool-icon">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+                            </div>
+                            <div>
+                                <h2 class="tool-title">تحويل صيغ الصور</h2>
+                                <p class="tool-desc">تحويل HEIC, PNG, JPG, WEBP, BMP, TIFF إلى الصيغة التي تريدها — دفعة واحدة تصل إلى 50 ملفاً</p>
+                            </div>
+                        </div>
+
+                        <div class="drop-zone" id="convertDrop">
                             <div class="drop-icon">
-                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                                    <polyline points="17 8 12 3 7 8"/>
-                                    <line x1="12" y1="3" x2="12" y2="15"/>
-                                </svg>
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
                             </div>
                             <p class="drop-text">اسحب الملفات هنا أو <span class="drop-browse">اختر من جهازك</span></p>
-                            <p class="drop-hint">يدعم: HEIC, WEBP, BMP, TIFF, JPG, PNG — حتى 50 ملف</p>
+                            <p class="drop-hint">يدعم: HEIC, JPG, PNG, WEBP, BMP, TIFF</p>
                         </div>
                         <input type="file" id="convertInput" accept="image/*,.heic,.heif,.webp,.bmp,.tiff,.tif" multiple hidden>
-                    </div>
 
-                    <div class="convert-options" id="convertOptions" style="display:none;">
-                        <div class="options-row">
-                            <label class="option-label">تحويل إلى:</label>
-                            <div class="radio-group">
-                                <label class="radio-option">
-                                    <input type="radio" name="convertFormat" value="image/jpeg" checked>
-                                    <span class="radio-badge">JPG</span>
-                                </label>
-                                <label class="radio-option">
-                                    <input type="radio" name="convertFormat" value="image/png">
-                                    <span class="radio-badge">PNG</span>
-                                </label>
-                                <label class="radio-option">
-                                    <input type="radio" name="convertFormat" value="image/webp">
-                                    <span class="radio-badge">WEBP</span>
+                        <div class="convert-options" id="convertOptions" style="display:none">
+                            <div class="options-row">
+                                <span class="option-label">تحويل إلى:</span>
+                                <div class="radio-group">
+                                    <label class="radio-option"><input type="radio" name="convertFormat" value="image/jpeg" checked><span class="radio-badge">JPG</span></label>
+                                    <label class="radio-option"><input type="radio" name="convertFormat" value="image/png"><span class="radio-badge">PNG</span></label>
+                                    <label class="radio-option"><input type="radio" name="convertFormat" value="image/webp"><span class="radio-badge">WEBP</span></label>
+                                </div>
+                                <label class="quality-slider-label">الجودة: <span id="convertQualityVal">92</span>%
+                                    <input type="range" id="convertQuality" min="10" max="100" value="92" class="quality-slider">
                                 </label>
                             </div>
-                            <label class="quality-slider-label" id="convertQualityLabel">
-                                الجودة: <span id="convertQualityVal">92</span>%
-                                <input type="range" id="convertQuality" min="10" max="100" value="92" class="quality-slider">
-                            </label>
+                            <div class="file-list" id="convertFileList"></div>
+                            <div class="action-bar">
+                                <button class="btn btn-secondary" id="convertClear">مسح الكل</button>
+                                <button class="btn btn-primary" id="convertStart">تحويل الكل</button>
+                            </div>
                         </div>
-                        <div class="file-list" id="convertFileList"></div>
-                        <div class="action-bar">
-                            <button class="btn btn-secondary" id="convertClear">مسح الكل</button>
-                            <button class="btn btn-primary" id="convertStart">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/></svg>
-                                تحويل الكل
-                            </button>
+
+                        <div class="progress-area" id="convertProgress" style="display:none">
+                            <div class="progress-bar-wrap"><div class="progress-bar" id="convertProgressBar"></div></div>
+                            <span class="progress-text" id="convertProgressText">0%</span>
                         </div>
+
+                        <div class="result-area" id="convertResult" style="display:none"></div>
                     </div>
+                </section>
 
-                    <div class="progress-area" id="convertProgress" style="display:none;">
-                        <div class="progress-bar-wrap">
-                            <div class="progress-bar" id="convertProgressBar"></div>
+                <!-- ── COMPRESS PANEL ── -->
+                <section class="tool-panel" id="compress">
+                    <div class="tool-card">
+                        <div class="tool-header">
+                            <div class="tool-icon">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+                            </div>
+                            <div>
+                                <h2 class="tool-title">ضغط وتصغير حجم الصور</h2>
+                                <p class="tool-desc">صغّر حجم صورك بنسبة تصل إلى 80% مع شريط تحكم مرن بمستوى الجودة</p>
+                            </div>
                         </div>
-                        <span class="progress-text" id="convertProgressText">0%</span>
-                    </div>
 
-                    <div class="result-area" id="convertResult" style="display:none;"></div>
-                </div>
-            </section>
-
-            <!-- COMPRESS TOOL -->
-            <section class="tool-section" id="compress">
-                <div class="tool-card">
-                    <div class="tool-header">
-                        <div class="tool-icon compress-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="4" y="4" width="16" height="16" rx="2"/>
-                                <path d="M8 12h8"/>
-                                <path d="M12 8v8"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <h2 class="tool-title">ضغط الصور</h2>
-                            <p class="tool-desc">صغّر حجم صورك بنسبة تصل إلى 80% دون فقدان ملحوظ للجودة</p>
-                        </div>
-                    </div>
-
-                    <div class="drop-zone" id="compressDrop" data-tool="compress">
-                        <div class="drop-zone-content">
+                        <div class="drop-zone" id="compressDrop">
                             <div class="drop-icon">
-                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                                    <polyline points="17 8 12 3 7 8"/>
-                                    <line x1="12" y1="3" x2="12" y2="15"/>
-                                </svg>
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
                             </div>
                             <p class="drop-text">اسحب الملفات هنا أو <span class="drop-browse">اختر من جهازك</span></p>
-                            <p class="drop-hint">يدعم: JPG, PNG, WEBP — حتى 50 ملف</p>
+                            <p class="drop-hint">يدعم: JPG, PNG, WEBP — حتى 50 ملفاً</p>
                         </div>
                         <input type="file" id="compressInput" accept="image/jpeg,image/png,image/webp" multiple hidden>
+
+                        <div class="compress-options" id="compressOptions" style="display:none">
+                            <div class="options-row">
+                                <label class="quality-slider-label">مستوى الجودة: <span id="compressQualityVal">70</span>%
+                                    <input type="range" id="compressQuality" min="5" max="95" value="70" class="quality-slider">
+                                </label>
+                            </div>
+                            <div class="file-list" id="compressFileList"></div>
+                            <div class="action-bar">
+                                <button class="btn btn-secondary" id="compressClear">مسح الكل</button>
+                                <button class="btn btn-primary" id="compressStart">ضغط الكل</button>
+                            </div>
+                        </div>
+
+                        <div class="progress-area" id="compressProgress" style="display:none">
+                            <div class="progress-bar-wrap"><div class="progress-bar" id="compressProgressBar"></div></div>
+                            <span class="progress-text" id="compressProgressText">0%</span>
+                        </div>
+
+                        <div class="result-area" id="compressResult" style="display:none"></div>
                     </div>
+                </section>
 
-                    <div class="compress-options" id="compressOptions" style="display:none;">
-                        <div class="options-row">
-                            <label class="quality-slider-label">
-                                مستوى الضغط: <span id="compressQualityVal">70</span>%
-                                <input type="range" id="compressQuality" min="5" max="95" value="70" class="quality-slider">
-                            </label>
+                <!-- ── RESIZE PANEL ── -->
+                <section class="tool-panel" id="resize">
+                    <div class="tool-card">
+                        <div class="tool-header">
+                            <div class="tool-icon">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+                            </div>
+                            <div>
+                                <h2 class="tool-title">تعديل أبعاد الصور (Resize)</h2>
+                                <p class="tool-desc">غيّر أبعاد صورك بدقة عالية بالبكسل أو بالنسبة المئوية</p>
+                            </div>
                         </div>
-                        <div class="file-list" id="compressFileList"></div>
-                        <div class="action-bar">
-                            <button class="btn btn-secondary" id="compressClear">مسح الكل</button>
-                            <button class="btn btn-primary" id="compressStart">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 12h8"/></svg>
-                                ضغط الكل
-                            </button>
-                        </div>
-                    </div>
 
-                    <div class="progress-area" id="compressProgress" style="display:none;">
-                        <div class="progress-bar-wrap">
-                            <div class="progress-bar" id="compressProgressBar"></div>
-                        </div>
-                        <span class="progress-text" id="compressProgressText">0%</span>
-                    </div>
-
-                    <div class="result-area" id="compressResult" style="display:none;"></div>
-                </div>
-            </section>
-
-            <!-- RESIZE TOOL -->
-            <section class="tool-section" id="resize">
-                <div class="tool-card">
-                    <div class="tool-header">
-                        <div class="tool-icon resize-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="15 3 21 3 21 9"/>
-                                <polyline points="9 21 3 21 3 15"/>
-                                <line x1="21" y1="3" x2="14" y2="10"/>
-                                <line x1="3" y1="21" x2="10" y2="14"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <h2 class="tool-title">تغيير حجم الصور</h2>
-                            <p class="tool-desc">عدّل أبعاد صورك بدقة — بالبكسل أو بالنسبة المئوية</p>
-                        </div>
-                    </div>
-
-                    <div class="drop-zone" id="resizeDrop" data-tool="resize">
-                        <div class="drop-zone-content">
+                        <div class="drop-zone" id="resizeDrop">
                             <div class="drop-icon">
-                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                                    <polyline points="17 8 12 3 7 8"/>
-                                    <line x1="12" y1="3" x2="12" y2="15"/>
-                                </svg>
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
                             </div>
                             <p class="drop-text">اسحب صورتك هنا أو <span class="drop-browse">اختر من جهازك</span></p>
-                            <p class="drop-hint">يدعم: JPG, PNG, WEBP, BMP, HEIC — ملف واحد لكل مرة</p>
+                            <p class="drop-hint">يدعم: JPG, PNG, WEBP, BMP, HEIC</p>
                         </div>
                         <input type="file" id="resizeInput" accept="image/*" hidden>
-                    </div>
 
-                    <div class="resize-options" id="resizeOptions" style="display:none;">
-                        <div class="resize-preview-wrap">
-                            <canvas id="resizePreview" class="resize-preview-canvas"></canvas>
-                            <div class="resize-dims" id="resizeDims">0 × 0</div>
-                        </div>
-                        <div class="options-row resize-controls">
-                            <div class="resize-mode-toggle">
-                                <button class="resize-mode-btn active" data-mode="percent">نسبة مئوية</button>
-                                <button class="resize-mode-btn" data-mode="pixels">بكسل</button>
+                        <div class="resize-options" id="resizeOptions" style="display:none">
+                            <div class="resize-preview-wrap">
+                                <canvas id="resizePreview" class="resize-preview-canvas"></canvas>
+                                <div class="resize-dims" id="resizeDims">0 × 0</div>
                             </div>
-                            <div class="resize-fields" id="resizePercentFields">
-                                <div class="input-group">
-                                    <label>العرض</label>
-                                    <input type="number" id="resizePercentW" value="50" min="1" max="500" class="input-field">
-                                    <span class="input-suffix">%</span>
+                            <div class="options-row resize-controls">
+                                <div class="resize-mode-toggle">
+                                    <button class="resize-mode-btn active" data-mode="percent">نسبة مئوية</button>
+                                    <button class="resize-mode-btn" data-mode="pixels">بكسل</button>
                                 </div>
+                                <div class="resize-fields" id="resizePercentFields">
+                                    <div class="input-group">
+                                        <label>العرض</label>
+                                        <div style="display:flex;align-items:center;gap:8px">
+                                            <input type="number" id="resizePercentW" value="50" min="1" max="500" class="input-field">
+                                            <span class="input-suffix">%</span>
+                                        </div>
+                                    </div>
+                                    <div class="input-group">
+                                        <label>الارتفاع</label>
+                                        <div style="display:flex;align-items:center;gap:8px">
+                                            <input type="number" id="resizePercentH" value="50" min="1" max="500" class="input-field">
+                                            <span class="input-suffix">%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="resize-fields" id="resizePixelFields" style="display:none">
+                                    <div class="input-group">
+                                        <label>العرض (px)</label>
+                                        <input type="number" id="resizePixelW" value="800" min="1" max="10000" class="input-field">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>الارتفاع (px)</label>
+                                        <input type="number" id="resizePixelH" value="600" min="1" max="10000" class="input-field">
+                                    </div>
+                                </div>
+                                <label class="checkbox-option">
+                                    <input type="checkbox" id="resizeKeepAspect" checked>
+                                    <span>الحفاظ على النسبة</span>
+                                </label>
                                 <div class="input-group">
-                                    <label>الارتفاع</label>
-                                    <input type="number" id="resizePercentH" value="50" min="1" max="500" class="input-field">
-                                    <span class="input-suffix">%</span>
+                                    <label>صيغة الإخراج</label>
+                                    <select id="resizeOutput" class="select-field">
+                                        <option value="image/jpeg">JPG</option>
+                                        <option value="image/png">PNG</option>
+                                        <option value="image/webp">WEBP</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="resize-fields" id="resizePixelFields" style="display:none;">
-                                <div class="input-group">
-                                    <label>العرض</label>
-                                    <input type="number" id="resizePixelW" value="800" min="1" max="10000" class="input-field">
-                                    <span class="input-suffix">px</span>
+                            <div class="action-bar">
+                                <button class="btn btn-secondary" id="resizeClear">إلغاء</button>
+                                <button class="btn btn-primary" id="resizeStart">تغيير الحجم والتحميل</button>
+                            </div>
+                        </div>
+
+                        <div class="progress-area" id="resizeProgress" style="display:none">
+                            <div class="progress-bar-wrap"><div class="progress-bar" id="resizeProgressBar"></div></div>
+                            <span class="progress-text" id="resizeProgressText">0%</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ── FUTURE PANEL ── -->
+                <section class="tool-panel" id="future">
+                    <div class="tool-card">
+                        <div class="tool-header">
+                            <div class="tool-icon">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+                            </div>
+                            <div>
+                                <h2 class="tool-title">خدمات الصوت والفيديو</h2>
+                                <p class="tool-desc">استخراج وتحميل الملفات الصوتية من الفيديوهات — قيد التطوير</p>
+                            </div>
+                        </div>
+                        <div class="future-section">
+                            <div class="future-card">
+                                <div class="future-icon">
+                                    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
                                 </div>
-                                <div class="input-group">
-                                    <label>الارتفاع</label>
-                                    <input type="number" id="resizePixelH" value="600" min="1" max="10000" class="input-field">
-                                    <span class="input-suffix">px</span>
-                                </div>
-                            </div>
-                            <label class="checkbox-option">
-                                <input type="checkbox" id="resizeKeepAspect" checked>
-                                <span>الحفاظ على النسبة</span>
-                            </label>
-                            <div class="input-group">
-                                <label>الإخراج</label>
-                                <select id="resizeOutput" class="select-field">
-                                    <option value="image/jpeg">JPG</option>
-                                    <option value="image/png">PNG</option>
-                                    <option value="image/webp">WEBP</option>
-                                </select>
+                                <h3>استخراج الصوت من الفيديوهات</h3>
+                                <p>أداة قوية لاستخراج ملفات MP3 صوتية عالية الجودة من أي فيديو، بالكامل داخل متصفحك.</p>
+                                <ul class="future-features">
+                                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> استخراج MP3</li>
+                                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> قص المقطع الصوتي</li>
+                                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> تحويل بين الصيغ الصوتية</li>
+                                </ul>
+                                <form class="notify-form" id="notifyForm">
+                                    <input type="email" id="notifyEmail" placeholder="بريدك الإلكتروني ليصلك الإشعار عند الإطلاق">
+                                    <button type="submit" class="btn btn-primary">نبّهني عند الإطلاق</button>
+                                </form>
+                                <p class="notify-msg" id="notifyMsg"></p>
                             </div>
                         </div>
-                        <div class="action-bar">
-                            <button class="btn btn-secondary" id="resizeClear">إلغاء</button>
-                            <button class="btn btn-primary" id="resizeStart">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><line x1="21" y1="3" x2="14" y2="10"/></svg>
-                                تغيير الحجم وتحميل
-                            </button>
+                    </div>
+                </section>
+            </main>
+
+            <!-- SIDEBAR -->
+            <aside class="sidebar-sticky" id="sidebar">
+                <div class="sidebar-grid">
+                    <!-- Visitor Stats -->
+                    <div class="side-card" id="statsCard">
+                        <h3>
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
+                            إحصائيات الموقع
+                        </h3>
+                        <div class="sub">عداد زوار مباشر وتفاصيل جهازك</div>
+                        <div class="stats-large">
+                            <div class="stat-number" id="visitorCount">0</div>
+                            <div class="stat-label">زائراً حتى الآن</div>
+                        </div>
+                        <div class="stats-device-list" id="deviceInfo">
+                            <div class="stat-device" id="devBrowser"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><span>المتصفح</span><span id="browserVal">—</span></div>
+                            <div class="stat-device" id="devOs"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>نظام التشغيل</span><span id="osVal">—</span></div>
+                            <div class="stat-device" id="devDevice"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg><span>الجهاز</span><span id="deviceVal">—</span></div>
+                            <div class="stat-device" id="devLang"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><span>اللغة</span><span id="langVal">—</span></div>
                         </div>
                     </div>
 
-                    <div class="progress-area" id="resizeProgress" style="display:none;">
-                        <div class="progress-bar-wrap">
-                            <div class="progress-bar" id="resizeProgressBar"></div>
-                        </div>
-                        <span class="progress-text" id="resizeProgressText">0%</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- CROP TOOL -->
-            <section class="tool-section" id="crop">
-                <div class="tool-card">
-                    <div class="tool-header">
-                        <div class="tool-icon crop-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M6 2v4H2"/>
-                                <path d="M18 22v-4h4"/>
-                                <rect x="6" y="6" width="12" height="12"/>
-                        </svg>
-                        </div>
-                        <div>
-                            <h2 class="tool-title">قص الصور</h2>
-                            <p class="tool-desc">قص أجزاء محددة من صورتك بحرية تامة</p>
-                        </div>
+                    <!-- Feedback -->
+                    <div class="side-card" id="feedbackCard">
+                        <h3>
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                            آراء واقتراحات
+                        </h3>
+                        <div class="sub">ساعدنا نطوّر المنصة بناءً على رأيك</div>
+                        <textarea class="feedback-field" id="feedbackText" placeholder="اقترح أداة جديدة أو أبلغ عن مشكلة…"></textarea>
+                        <select class="feedback-select" id="feedbackType">
+                            <option value="suggestion">اقتراح أداة جديدة</option>
+                            <option value="bug">الإبلاغ عن مشكلة</option>
+                            <option value="improvement">تحسين أداة موجودة</option>
+                            <option value="other">أخرى</option>
+                        </select>
+                        <button class="btn btn-primary feedback-btn" id="feedbackSend">إرسال الاقتراح</button>
+                        <p class="feedback-msg" id="feedbackMsg"></p>
                     </div>
 
-                    <div class="drop-zone" id="cropDrop" data-tool="crop">
-                        <div class="drop-zone-content">
-                            <div class="drop-icon">
-                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                                    <polyline points="17 8 12 3 7 8"/>
-                                    <line x1="12" y1="3" x2="12" y2="15"/>
-                                </svg>
-                            </div>
-                            <p class="drop-text">اسحب صورتك هنا أو <span class="drop-browse">اختر من جهازك</span></p>
-                            <p class="drop-hint">يدعم: JPG, PNG, WEBP, BMP, HEIC — ملف واحد</p>
+                    <!-- Ad Slot Sidebar -->
+                    <div class="ad-slot ad-slot-sidebar">
+                        <div class="ad-placeholder">
+                            <span>مساحة إعلانية</span>
+                            <small>300 × 250</small>
                         </div>
-                        <input type="file" id="cropInput" accept="image/*" hidden>
-                    </div>
-
-                    <div class="crop-options" id="cropOptions" style="display:none;">
-                        <div class="crop-canvas-wrap">
-                            <canvas id="cropCanvas" class="crop-canvas"></canvas>
-                            <div id="cropBox" class="crop-box">
-                                <div class="crop-handle nw" data-handle="nw"></div>
-                                <div class="crop-handle ne" data-handle="ne"></div>
-                                <div class="crop-handle sw" data-handle="sw"></div>
-                                <div class="crop-handle se" data-handle="se"></div>
-                                <div class="crop-handle n" data-handle="n"></div>
-                                <div class="crop-handle s" data-handle="s"></div>
-                                <div class="crop-handle e" data-handle="e"></div>
-                                <div class="crop-handle w" data-handle="w"></div>
-                            </div>
-                        </div>
-                        <div class="crop-info" id="cropInfo">0 × 0</div>
-                        <div class="options-row">
-                            <div class="crop-preset-group">
-                                <label>قص سريع:</label>
-                                <button class="crop-preset" data-ratio="free">حر</button>
-                                <button class="crop-preset" data-ratio="1:1">1:1</button>
-                                <button class="crop-preset" data-ratio="4:3">4:3</button>
-                                <button class="crop-preset" data-ratio="16:9">16:9</button>
-                                <button class="crop-preset" data-ratio="3:2">3:2</button>
-                            </div>
-                            <div class="input-group">
-                                <label>الإخراج</label>
-                                <select id="cropOutput" class="select-field">
-                                    <option value="image/jpeg">JPG</option>
-                                    <option value="image/png">PNG</option>
-                                    <option value="image/webp">WEBP</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="action-bar">
-                            <button class="btn btn-secondary" id="cropClear">إلغاء</button>
-                            <button class="btn btn-primary" id="cropStart">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2v4H2"/><path d="M18 22v-4h4"/><rect x="6" y="6" width="12" height="12"/></svg>
-                                قص وتحميل
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="progress-area" id="cropProgress" style="display:none;">
-                        <div class="progress-bar-wrap">
-                            <div class="progress-bar" id="cropProgressBar"></div>
-                        </div>
-                        <span class="progress-text" id="cropProgressText">0%</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Ad Sidebar -->
-            <aside class="ad-sidebar" id="ad-sidebar">
-                <div class="ad-slot ad-sidebar-slot">
-                    <div class="ad-placeholder">
-                        <span>مساحة إعلانية</span>
-                        <small>300 × 250</small>
                     </div>
                 </div>
             </aside>
         </div>
+    </div>
 
-        <!-- Ad Banner Bottom -->
-        <div class="ad-slot ad-bottom" id="ad-bottom">
-            <div class="ad-placeholder">
-                <span>مساحة إعلانية</span>
-                <small>728 × 90</small>
+    <!-- Ad Banner Bottom -->
+    <section class="ad-slot">
+        <div class="ad-placeholder">
+            <span>مساحة إعلانية</span>
+            <small>728 × 90</small>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">لماذا Quick Convert؟</h2>
+            <p class="section-sub">منصة مصممة للسرعة والخصوصية، بدون تعقيد</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h3>خصوصية تامة</h3>
+                    <p>كل العمليات تتم داخل متصفحك. لا تُرفع ملفاتك لأي سيرفر إطلاقاً.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <h3>سرعة فائقة</h3>
+                    <p>المعالجة الفورية على جهازك تعني نتائج لحظية دون انتظار رفع أو تنزيل.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </div>
+                    <h3>مجاني بالكامل</h3>
+                    <p>بدون قيود، بدون علامات مائية، وبدون الحاجة لإنشاء حساب.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    </div>
+                    <h3>يعمل على كل الأجهزة</h3>
+                    <p>تصميم متجاوب يعمل بسلاسة على الجوال، اللابتوب، والتابلت.</p>
+                </div>
             </div>
         </div>
+    </section>
 
-        <!-- Features Section for SEO -->
-        <section class="features" id="features">
-            <div class="container">
-                <h2 class="section-title">لماذا MediaTool Pro؟</h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                        </div>
-                        <h3>خصوصية تامة</h3>
-                        <p>جميع العمليات تتم داخل متصفحك. لا يتم رفع أي ملفات لسيرفرات خارجية.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                        </div>
-                        <h3>سرعة فائقة</h3>
-                        <p>المعالجة تتم مباشرة على جهازك بدون انتظار الرفع أو التحميل من السيرفر.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                        </div>
-                        <h3>مجاني بالكامل</h3>
-                        <p>لا توجد قيود أو علامات مائية. استخدم الأدوات مجاناً بدون تسجيل.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                        </div>
-                        <h3>يعمل على كل الأجهزة</h3>
-                        <p>تصميم متجاوب يعمل بسلاسة على الهاتف واللابتوب وجميع أحجام الشاشات.</p>
-                    </div>
-                </div>
+    <!-- FAQ -->
+    <section class="faq-section" id="faq">
+        <div class="container">
+            <h2 class="section-title">أسئلة شائعة</h2>
+            <div class="faq-list">
+                <details class="faq-item">
+                    <summary class="faq-question">هل يُرفع ملفي لأي سيرفر خارجي؟</summary>
+                    <p class="faq-answer">لا أبداً. جميع العمليات (التحويل، الضغط، تعديل الأبعاد) تتم بالكامل داخل متصفحك باستخدام تقنيات HTML5 الحديثة، فلا يغادر أي ملف جهازك.</p>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">ما هي صيغ الصور المدعومة؟</summary>
+                    <p class="faq-answer">ندعم HEIC, HEIF, JPG, JPEG, PNG, WEBP, BMP, TIFF. يمكنك التحويل بين أي صيغة إلى أي صيغة أخرى.</p>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">هل هناك حد لعدد الملفات؟</summary>
+                    <p class="faq-answer">يمكنك معالجة حتى 50 ملفاً في دفعة واحدة للتحويل والضغط، بينما يتطلب تعديل الأبعاد ملفاً واحداً في كل مرة للحصول على أدق النتائج.</p>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">هل الموقع مجاني حقاً بدون علامات مائية؟</summary>
+                    <p class="faq-answer">نعم، المنصة مجانية بالكامل حالياً بدون علامات مائية أو حدود أو تسجيل. سنُطلق لاحقاً مزايا متقدمة اختيارية.</p>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">متى سيتم إطلاق خدمات الصوت والفيديو؟</summary>
+                    <p class="faq-answer">الخدمات الصوتية والفيديو قيد التطوير. سجّل بريدك في قسم «الأدوات القادمة» ليصلك إشعار فور الإطلاق.</p>
+                </details>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- FAQ Section for SEO -->
-        <section class="faq-section" id="faq">
-            <div class="container">
-                <h2 class="section-title">أسئلة شائعة</h2>
-                <div class="faq-list">
-                    <details class="faq-item">
-                        <summary class="faq-question">هل يتم رفع صورتي لسيرفر خارجي؟</summary>
-                        <p class="faq-answer">لا، جميع العمليات (التحويل، الضغط، تغيير الحجم، القص) تتم بالكامل داخل متصفحك باستخدام تقنيات HTML5 Canvas. لا يتم رفع أي ملفات لسيرفرات خارجية، مما يضمن خصوصيتك التامة.</p>
-                    </details>
-                    <details class="faq-item">
-                        <summary class="faq-question">ما هي صيغ الصور المدعومة؟</summary>
-                        <p class="faq-answer">ندعم جميع الصيغ الشائعة: HEIC, HEIF, JPG, JPEG, PNG, WEBP, BMP, TIFF. يمكنك التحويل بين أي صيغة إلى أخرى.</p>
-                    </details>
-                    <details class="faq-item">
-                        <summary class="faq-question">هل هناك حد لعدد الملفات؟</summary>
-                        <p class="faq-answer">يمكنك معالجة حتى 50 ملف في دفعة واحدة أثناء التحويل والضغط. لتغيير الحجم والقص، نعالج ملف واحد في كل مرة للحفاظ على الأداء الأمثل.</p>
-                    </details>
-                    <details class="faq-item">
-                        <summary class="faq-question">هل الأداة مجانية فعلاً؟</summary>
-                        <p class="faq-answer">نعم، جميع الأدوات متاحة مجاناً بدون حدود أو علامات مائية أو الحاجة للتسجيل.</p>
-                    </details>
-                </div>
-            </div>
-        </section>
-    </main>
-
+    <!-- FOOTER -->
     <footer class="footer">
         <div class="container footer-inner">
             <div class="footer-brand">
-                <span class="logo-text">MediaTool<span class="logo-accent">Pro</span></span>
-                <p class="footer-tagline">أدوات تحويل ومعالجة الصور الأقوى — مباشرة من متصفحك.</p>
+                <span class="logo-text">Quick<span class="logo-accent">Convert</span></span>
+                <p class="footer-tagline">منصة معالجة وتحويل الوسائط الأسرع — كل شيء داخل متصفحك.</p>
             </div>
             <div class="footer-links">
-                <a href="#features">المميزات</a>
-                <a href="#faq">الأسئلة الشائعة</a>
                 <a href="#convert">تحويل الصور</a>
                 <a href="#compress">ضغط الصور</a>
-                <a href="#resize">تغيير الحجم</a>
-                <a href="#crop">قص الصور</a>
+                <a href="#resize">تعديل الأبعاد</a>
+                <a href="#future">الأدوات القادمة</a>
+                <a href="#faq">الأسئلة الشائعة</a>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 MediaTool Pro. جميع الحقوق محفوظة. الأدوات تعمل محلياً داخل متصفحك.</p>
+                <p>© 2026 Quick Media Converters. جميع الحقوق محفوظة.</p>
+                <span class="footer-license">مرخّص بموجب رخصة MIT — المصدر مفتوح للاستخدام التجاري</span>
             </div>
         </div>
     </footer>
