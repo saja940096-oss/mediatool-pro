@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://saja940096-oss.github.io/mediatool-pro/sitemap.xml
